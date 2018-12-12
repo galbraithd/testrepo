@@ -1,0 +1,15 @@
+File: /etc/systemd/system/nkn_mining.service                                                                  
+
+[Unit]
+Description=nkn
+
+[Service]
+User=root
+WorkingDirectory=/root/nknmining
+ExecStart=/root/nknmining/NKNMining
+Restart=always
+RestartSec=3
+LimitNOFILE=500000
+
+[Install]
+WantedBy=default.target
