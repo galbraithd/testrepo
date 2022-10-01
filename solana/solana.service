@@ -1,0 +1,38 @@
+[Unit]
+Description=Solana Validator
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+User=root
+Restart=always
+RestartSec=5
+Type=simple
+LimitNOFILE=1024000
+Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
+ExecStart=/root/.local/share/solana/install/active_release/bin/solana-validator \
+--identity /root/validator-keypair.json \
+--vote-account /root/vote-account-keypair.json \
+--ledger /root/solana/validator-ledger \
+--private-rpc \
+--gossip-port 8001 \
+--limit-ledger-size=50000000 \
+--rpc-port=8899 \
+--dynamic-port-range 8001-8016 \
+--entrypoint mainnet-beta.solana.com:8001 \
+--expected-shred-version 11762 \
+--known-validator PUmpKiNnSVAZ3w4KaFX6jKSjXUNHFShGkXbERo54xjb \
+--known-validator Ninja1spj6n9t5hVYgF3PdnYz2PLnkt7rvaw3firmjs \
+--known-validator CXPeim1wQMkcTvEHx9QdhgKREYYJD8bnaCCqPRwJ1to1 \
+--known-validator A4hyMd3FyvUJSRafDUSwtLLaQcxRP4r1BRC9w2AJ1to2 \
+--known-validator 23U4mgK9DMCxsv2StC4y2qAptP25Xv5b2cybKCeJ1to3 \
+--known-validator Ei8VLKR3chZAhJzWwj8PopeuedpQiths2ovVCQ2BCvK7 \
+--known-validator DiGifdKABxzru2KsjN3YkZZmWP9mVMYK8HWadjtPtJit \
+--known-validator 9FXD1NXrK6xFU8i4gLAgjj2iMEWTqJhSuQN8tQuDfm2e \
+--log - \
+--accounts /root/solana/validator-ledger/accounts/ \
+--account-shrink-path /root/solana/validator-ledger/accounts-shrink \
+--no-os-network-limits-test
+
+[Install]
+WantedBy=multi-user.target
